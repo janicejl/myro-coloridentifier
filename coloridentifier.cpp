@@ -14,66 +14,22 @@ using namespace cimg_library;
 string analyzePicture();
 string RGBToHex(int rNum, int gNum, int bNum);
 string toUppercase(string word);
+void readColorListOne(map<string, string> &list);
+void readColorListTwo(map<string, string> &list);
+void readColorListThree(map<string, string> &list);
+void readColorListFour(map<string, string> &list);
 
-class NameHex {
-	private:
-		string name;
-		string hex;
-	public:
-		string getName() {
-			return name;
-		}
-		string getHex() {
-			return hex;
-		}
-		void setName(string n) {
-			name = n;
-		}
-		void setHex(string h) {
-			hex = h;
-		}
-};
 
-int main(int argc, char ** argv)
-{
+int main(int argc, char ** argv) {
 //coloridentifier
 
-	ifstream in;
-	//in.open(argv[1]);
-	in.open("colorList.txt");
-	//vector<NameHex> list;
 	map<string, string> list;
-	if (in.good()) {
-		string word = "";
-		string colorname = "";
 
-		while(!in.eof()) {
-			colorname = "";
-			//NameHex temp;
-			in>>word;
-			//cout<<word<<endl;
-			while(word[0] != '#') {
-				colorname = colorname + word + " ";
-				in>>word;
-			}
-			//temp.setName(colorname);
-			//temp.setHex(word);
-
-			//list.push_back(temp);
-			//list.insert(pair<string,string>(word, colorname));
-			//list.insert(word, colorname);
-			cout<<"Inserting: "<<toUppercase(word)<<"  "<<colorname<<endl;
-			list[toUppercase(word)] = colorname;
-		}
-
-		// for (int i = 0; i < (int)list.size(); i++) {
-		// 	cout<< list[i].name<<"  "<<list[i].hex<<endl;
-		// }
-
-		in.close();
-	} else {
-		cout<<"Bad file."<<endl;
-	}
+	readColorListFour(list);
+	readColorListTwo(list);
+	readColorListThree(list);
+	readColorListOne(list);
+	cout<<list.size()<<endl;
 
 	connect();
 	cout << "Waiting..." << endl;
@@ -84,19 +40,8 @@ int main(int argc, char ** argv)
 
 	while(true) {
 		string hex = analyzePicture();
-		//string hex = RGBToHex(255, 255, 255);
-		//cout<<hex<<endl;
 
-		// for (int i = 0; i < (int)list.size(); i++) {
-		// 	//if (list[i].getHex() == hex) {
-		// 	if (strcasecmp(hex.c_str(), list[i].getHex().c_str()) == 1) {
-		// 		cout<<list[i].getName()<<endl;
-		// 		break;
-		// 	}
-		// }
-
-		//list.at(hex);
-		cout<<list[hex]<<endl;
+		cout<<hex<<" = "<<list[hex]<<endl;
 	}	
 	
 	cout << "Waiting..." << endl;
@@ -171,4 +116,112 @@ string toUppercase(string word)
 		name = name + word[i];
 	}
 	return name;
+}
+
+void readColorListOne(map<string, string> &list) {
+	ifstream in("colorList.txt");
+
+	if (in.good()) {
+		string word = "";
+		string colorname = "";
+
+		while(!in.eof()) {
+			colorname = "";
+			in>>word;
+			//cout<<word<<endl;
+			while(word[0] != '#') {
+				colorname = colorname + word + " ";
+				in>>word;
+			}
+			if (colorname != ""){
+				cout<<"Inserting: "<<toUppercase(word)<<"  "<<colorname<<endl;
+				list[toUppercase(word)] = colorname;
+			}
+		}
+
+		in.close();
+	} else {
+		cout<<"Bad file."<<endl;
+	}
+
+}
+
+void readColorListTwo(map<string, string> &list) {
+	ifstream in("colorList2.txt");
+
+	int r,g,b;
+	string name;
+	string hex;
+
+	if (in.good()) {
+		while (!in.eof()) {
+			in>>r;
+			in>>g;
+			in>>b;
+			getline(in, name);
+
+			hex = RGBToHex(r,g,b);
+			cout<<"Inserting: "<<hex<<"  "<<name<<endl;
+			list[hex] = name;
+		}
+	} else {
+		cout<<"Bad file."<<endl;
+	}
+
+	in.close();	
+}
+
+void readColorListThree(map<string, string> &list) {
+	ifstream in("colorList3.txt");
+
+	int r,g,b;
+	string name;
+	string hex;
+	int rubbishNum;
+	string rubbishWord;
+
+	if (in.good()) {
+		while (!in.eof()) {
+			in>>rubbishWord;
+			in>>r;
+			in>>g;
+			in>>b;
+			in>>rubbishNum;
+			getline(in, name);
+
+			hex = RGBToHex(r,g,b);
+
+			cout<<"Inserting: "<<hex<<"  "<<name<<endl;
+			list[hex] = name;
+		}
+	} else {
+		cout<<"Bad file."<<endl;
+	}
+
+	in.close();	
+}
+
+void readColorListFour(map<string, string> &list) {
+	ifstream in("colorList4.txt");
+
+	int r,g,b;
+	string name;
+	string hex;
+
+	if (in.good()) {
+		while (!in.eof()) {
+			in>>r;
+			in>>g;
+			in>>b;
+			getline(in, name);
+
+			hex = RGBToHex(r,g,b);
+			cout<<"Inserting: "<<hex<<"  "<<name<<endl;
+			list[hex] = name;
+		}
+	} else {
+		cout<<"Bad file."<<endl;
+	}
+
+	in.close();	
 }
