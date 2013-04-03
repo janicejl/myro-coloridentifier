@@ -77,7 +77,7 @@ int main(int argc, char ** argv) {
 
 string analyzePicture() {
 	cout << "Take a picture..." << endl;
-	//robot.beep(0.2,990);
+	robot.beep(0.2,990);
 	PicturePtr pic = robot.takePicture("jpeg", false);
 	pic->show("Robot View");
 	//pic->savePicture("pic.jpg");
