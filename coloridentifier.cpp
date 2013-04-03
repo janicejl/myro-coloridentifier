@@ -49,6 +49,20 @@ int main(int argc, char ** argv) {
 
 		string closestHex = findClosest(hex, list);
 
+		PicturePtr colour = makePicture(100, 100);
+
+		const int R = getR(closestHex);
+		const int G = getG(closestHex);
+		const int B = getB(closestHex);
+
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				setPixelColor(colour, i,j,R,G,B);
+			}
+		}
+
+		colour->show("Colour");
+
 		cout<<endl;
 		cout<<list[closestHex]<<endl;
 	}	
@@ -63,7 +77,7 @@ int main(int argc, char ** argv) {
 
 string analyzePicture() {
 	cout << "Take a picture..." << endl;
-	robot.beep(0.2,990);
+	//robot.beep(0.2,990);
 	PicturePtr pic = robot.takePicture("jpeg", false);
 	pic->show("Robot View");
 	//pic->savePicture("pic.jpg");
